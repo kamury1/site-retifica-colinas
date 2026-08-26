@@ -1,0 +1,350 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #111;
+    color: #f5f5f5;
+}
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+header {
+    background-color: #0b0b0b;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #e63900;
+}
+
+header h1 {
+    font-size: 26px;
+    color: #ffffff;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #ff4d00;
+}
+
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
+
+section {
+    padding: 80px 8%;
+}
+
+.destaque {
+    color: #e63900 !important;
+    font-size: 15px !important;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 15px !important;
+}
+
+/* =========================
+   INÍCIO / HERO
+========================= */
+
+#inicio {
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.62),
+            rgba(0, 0, 0, 0.62)
+        ),
+        url("img/motor.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+#inicio h2 {
+    font-size: 48px;
+    max-width: 700px;
+    margin-bottom: 20px;
+}
+
+#inicio p {
+    font-size: 20px;
+    color: #cccccc;
+    margin-bottom: 30px;
+}
+
+#inicio a,
+#contato a {
+    display: inline-block;
+    width: fit-content;
+    padding: 15px 25px;
+    background-color: #e63900;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#inicio a:hover,
+#contato a:hover {
+    background-color: #ff4d00;
+    transform: translateY(-2px);
+}
+
+/* =========================
+   SERVIÇOS
+========================= */
+
+#servicos {
+    background-color: #191919;
+}
+
+#servicos h2,
+#sobre h2,
+#contato h2 {
+    font-size: 34px;
+    margin-bottom: 30px;
+}
+
+.servicos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+#servicos .servico-card {
+    background-color: #242424;
+    padding: 30px;
+    min-height: 220px;
+    margin-bottom: 0;
+    border-left: none;
+    border-top: 4px solid #e63900;
+    border-radius: 6px;
+
+    transition:
+        transform 0.3s,
+        background-color 0.3s;
+}
+
+.servico-card:hover {
+    transform: translateY(-6px);
+    background-color: #2c2c2c !important;
+}
+
+.servico-card span {
+    display: block;
+    color: #e63900;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.servico-card h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#servicos p,
+#sobre p,
+#contato p {
+    color: #cccccc;
+    line-height: 1.6;
+}
+
+/* =========================
+   SOBRE
+========================= */
+
+#sobre {
+    background-color: #111111;
+}
+
+/* =========================
+   CONTATO
+========================= */
+
+#contato {
+    background-color: #191919;
+}
+
+#contato p {
+    margin-bottom: 25px;
+}
+
+/* =========================
+   RODAPÉ
+========================= */
+
+footer {
+    background-color: #080808;
+    text-align: center;
+    padding: 25px;
+    color: #888888;
+}
+
+/* =========================
+   CELULAR
+========================= */
+/* =========================
+   SOBRE
+========================= */
+
+#sobre {
+    background-color: #111111;
+}
+
+.sobre-conteudo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.sobre-texto h2 {
+    font-size: 38px;
+    margin-bottom: 25px;
+}
+
+.sobre-texto > p {
+    margin-bottom: 18px;
+    line-height: 1.7;
+}
+
+.sobre-imagem {
+    overflow: hidden;
+    border-radius: 8px;
+    border-bottom: 4px solid #e63900;
+}
+
+.sobre-imagem img {
+    display: block;
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
+
+.sobre-imagem:hover img {
+    transform: scale(1.04);
+}
+
+.sobre-destaques {
+    display: flex;
+    gap: 30px;
+    margin-top: 35px;
+}
+
+.sobre-destaques div {
+    display: flex;
+    flex-direction: column;
+}
+
+.sobre-destaques strong {
+    color: #e63900;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.sobre-destaques span {
+    color: #aaaaaa;
+    font-size: 14px;
+}
+.contato-botoes {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.botao-instagram {
+    display: inline-block;
+    width: fit-content;
+    padding: 15px 25px;
+    border: 2px solid #e63900;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.botao-instagram:hover {
+    background-color: #e63900;
+    transform: translateY(-2px);
+}
+.logo img {
+    height: 240px;
+    width: auto;
+    display: block;
+}
+
+@media (max-width: 700px) {
+
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav {
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #inicio {
+        min-height: 520px;
+    }
+
+    #inicio h2 {
+        font-size: 36px;
+    }
+
+    section {
+        padding: 60px 6%;
+    }
+
+    .servicos-grid {
+        grid-template-columns: 1fr;
+
+    }
+.sobre-conteudo {
+    grid-template-columns: 1fr;
+    gap: 35px;
+}
+
+.sobre-destaques {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sobre-imagem img {
+    height: 300px;
+}
+.logo img {
+    height: 55px;
+}
+}
