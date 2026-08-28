@@ -2,32 +2,51 @@
 <html lang="pt-BR">
 
 <head>
+
+    <!-- =====================================================
+         CONFIGURAÇÕES BÁSICAS
+    ====================================================== -->
+
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <!-- SEO -->
-    <title>Retífica Colinas | Retífica de Motores em Ibaiti - PR</title>
+    <title>
+        Retífica Colinas | Retífica de Motores em Ibaiti - PR
+    </title>
 
     <meta
         name="description"
-        content="Retífica Colinas em Ibaiti-PR. Serviços especializados em retífica de motores, cabeçotes, blocos, virabrequins e recuperação de componentes."
+        content="Retífica Colinas em Ibaiti-PR. Serviços de retífica de motores, cabeçotes, blocos, virabrequins e recuperação de componentes com precisão, qualidade e confiança."
     >
 
     <meta
-        name="keywords"
-        content="retífica Ibaiti, retífica de motores Ibaiti, retífica de cabeçote, retífica de bloco, virabrequim, motor, Retífica Colinas"
+        name="author"
+        content="Retífica Colinas"
     >
 
-    <meta name="author" content="Retífica Colinas">
+    <meta
+        name="robots"
+        content="index, follow"
+    >
 
-    <meta name="theme-color" content="#0b0b0b">
+    <meta
+        name="theme-color"
+        content="#0a0a0a"
+    >
 
 
-    <!-- Compartilhamento em redes sociais -->
+    <!-- =====================================================
+         OPEN GRAPH
+         Compartilhamento em WhatsApp / Facebook
+    ====================================================== -->
+
     <meta
         property="og:title"
-        content="Retífica Colinas | Retífica de Motores em Ibaiti - PR"
+        content="Retífica Colinas | Retífica de Motores"
     >
 
     <meta
@@ -41,13 +60,40 @@
     >
 
     <meta
+        property="og:url"
+        content="https://kamury1.github.io/site-retifica-colinas/"
+    >
+
+    <meta
         property="og:image"
-        content="img/logo.png"
+        content="https://kamury1.github.io/site-retifica-colinas/img/logo.png"
+    >
+
+    <meta
+        property="og:locale"
+        content="pt_BR"
     >
 
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+    <!-- =====================================================
+         ÍCONE DA ABA
+    ====================================================== -->
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="img/logo.png"
+    >
+
+
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
@@ -56,106 +102,198 @@
 
 
     <!-- =====================================================
+         ACESSIBILIDADE
+    ====================================================== -->
+
+    <a
+        href="#conteudo-principal"
+        class="skip-link"
+    >
+        Ir para o conteúdo
+    </a>
+
+
+    <!-- =====================================================
          CABEÇALHO
     ====================================================== -->
 
-    <header>
+    <header class="header-principal">
 
-        <a
-            href="#inicio"
-            class="logo"
-            aria-label="Retífica Colinas - Início"
-        >
-            <img
-                src="img/logo.png"
-                alt="Logo da Retífica Colinas"
+        <div class="header-container">
+
+
+            <!-- LOGO -->
+
+            <a
+                href="#inicio"
+                class="logo"
+                aria-label="Retífica Colinas - Página inicial"
             >
-        </a>
 
+                <img
+                    src="img/logo.png"
+                    alt="Retífica Colinas"
+                >
 
-        <button
-            class="menu-toggle"
-            aria-label="Abrir menu"
-            aria-expanded="false"
-        >
-            ☰
-        </button>
-
-
-        <nav aria-label="Menu principal">
-
-            <a href="#inicio">
-                Início
             </a>
 
-            <a href="#servicos">
-                Serviços
-            </a>
 
-            <a href="#sobre">
-                Sobre
-            </a>
+            <!-- BOTÃO MOBILE -->
 
-            <a href="#contato">
-                Contato
-            </a>
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Abrir menu"
+                aria-expanded="false"
+                aria-controls="menu-principal"
+            >
+                ☰
+            </button>
 
-        </nav>
+
+            <!-- MENU -->
+
+            <nav
+                id="menu-principal"
+                class="menu-principal"
+                aria-label="Navegação principal"
+            >
+
+                <a href="#inicio">
+                    Início
+                </a>
+
+                <a href="#servicos">
+                    Serviços
+                </a>
+
+                <a href="#sobre">
+                    Sobre
+                </a>
+
+                <a href="#contato">
+                    Contato
+                </a>
+
+
+                <a
+                    href="https://wa.me/554335465709?text=Olá%2C%20vim%20pelo%20site%20da%20Retífica%20Colinas%20e%20gostaria%20de%20solicitar%20um%20orçamento."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="menu-orcamento"
+                >
+                    Solicitar orçamento
+                </a>
+
+            </nav>
+
+        </div>
 
     </header>
+
 
 
     <!-- =====================================================
          CONTEÚDO PRINCIPAL
     ====================================================== -->
 
-    <main>
+    <main id="conteudo-principal">
 
 
         <!-- =================================================
-             INÍCIO / HERO
+             HERO / INÍCIO
         ================================================== -->
 
-        <section id="inicio">
+        <section
+            id="inicio"
+            class="hero"
+        >
 
-            <div class="hero-conteudo">
-
-                <p class="destaque">
-                    RETÍFICA DE MOTORES
-                </p>
-
-
-                <h1>
-                    Precisão que move,<br>
-                    qualidade que dura.
-                </h1>
+            <div class="hero-overlay"></div>
 
 
-                <p class="hero-texto">
-                    Serviços especializados em retífica e recuperação
-                    de motores, com experiência, cuidado e compromisso
-                    em cada etapa do serviço.
-                </p>
+            <div class="hero-container">
 
 
-                <div class="hero-botoes">
-
-                    <a
-                        href="https://wa.me/554335465709?text=Olá%2C%20vim%20pelo%20site%20da%20Retífica%20Colinas%20e%20gostaria%20de%20solicitar%20um%20orçamento."
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="botao-principal"
-                    >
-                        Solicitar orçamento
-                    </a>
+                <div class="hero-conteudo">
 
 
-                    <a
-                        href="#servicos"
-                        class="botao-secundario"
-                    >
-                        Ver serviços
-                    </a>
+                    <p class="destaque">
+                        RETÍFICA DE MOTORES
+                    </p>
+
+
+                    <h1>
+                        Precisão que move.
+                        <span>
+                            Qualidade que dura.
+                        </span>
+                    </h1>
+
+
+                    <p class="hero-texto">
+                        Serviços especializados em retífica,
+                        recuperação e usinagem de componentes
+                        de motores, com cuidado técnico,
+                        experiência e compromisso em cada serviço.
+                    </p>
+
+
+                    <div class="hero-botoes">
+
+
+                        <a
+                            href="https://wa.me/554335465709?text=Olá%2C%20vim%20pelo%20site%20da%20Retífica%20Colinas%20e%20gostaria%20de%20solicitar%20um%20orçamento."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="botao botao-principal"
+                        >
+                            Solicitar orçamento
+                        </a>
+
+
+                        <a
+                            href="#servicos"
+                            class="botao botao-secundario"
+                        >
+                            Conhecer serviços
+                        </a>
+
+
+                    </div>
+
+
+                    <div class="hero-informacoes">
+
+
+                        <div class="hero-info">
+
+                            <strong>
+                                Ibaiti - PR
+                            </strong>
+
+                            <span>
+                                Atendimento local
+                            </span>
+
+                        </div>
+
+
+                        <div class="hero-info">
+
+                            <strong>
+                                (43) 3546-5709
+                            </strong>
+
+                            <span>
+                                Telefone / WhatsApp
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
 
                 </div>
 
@@ -164,174 +302,250 @@
         </section>
 
 
+
         <!-- =================================================
              SERVIÇOS
         ================================================== -->
 
-        <section id="servicos">
+        <section
+            id="servicos"
+            class="secao servicos"
+        >
 
-            <div class="secao-titulo">
-
-                <p class="destaque">
-                    O QUE FAZEMOS
-                </p>
-
-                <h2>
-                    Nossos Serviços
-                </h2>
-
-                <p>
-                    Soluções especializadas para recuperação,
-                    usinagem e manutenção de componentes de motores.
-                </p>
-
-            </div>
+            <div class="container">
 
 
-            <div class="servicos-grid">
+                <div class="secao-cabecalho">
 
 
-                <!-- 01 -->
+                    <div>
 
-                <article class="servico-card">
+                        <p class="destaque">
+                            O QUE FAZEMOS
+                        </p>
 
-                    <span>
-                        01
-                    </span>
 
-                    <h3>
-                        Retífica de Motores
-                    </h3>
+                        <h2>
+                            Serviços especializados
+                            para o seu motor
+                        </h2>
 
-                    <p>
-                        Recuperação completa de motores com atenção
-                        aos detalhes, precisão técnica e compromisso
-                        com desempenho e durabilidade.
+                    </div>
+
+
+                    <p class="secao-descricao">
+                        Trabalhamos com recuperação e usinagem
+                        de componentes, buscando precisão,
+                        confiabilidade e durabilidade em cada serviço.
                     </p>
 
-                </article>
+
+                </div>
 
 
-                <!-- 02 -->
 
-                <article class="servico-card">
+                <div class="servicos-grid">
 
-                    <span>
-                        02
-                    </span>
 
-                    <h3>
-                        Retífica de Cabeçotes
-                    </h3>
+                    <!-- SERVIÇO 01 -->
+
+                    <article class="servico-card">
+
+                        <span class="servico-numero">
+                            01
+                        </span>
+
+                        <h3>
+                            Retífica de Motores
+                        </h3>
+
+                        <p>
+                            Recuperação e análise completa do motor,
+                            respeitando medidas, especificações e
+                            condições de cada componente.
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- SERVIÇO 02 -->
+
+                    <article class="servico-card">
+
+                        <span class="servico-numero">
+                            02
+                        </span>
+
+                        <h3>
+                            Retífica de Cabeçotes
+                        </h3>
+
+                        <p>
+                            Serviços de recuperação e usinagem
+                            para restaurar vedação, funcionamento
+                            e desempenho do cabeçote.
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- SERVIÇO 03 -->
+
+                    <article class="servico-card">
+
+                        <span class="servico-numero">
+                            03
+                        </span>
+
+                        <h3>
+                            Retífica de Blocos
+                        </h3>
+
+                        <p>
+                            Avaliação e usinagem de blocos
+                            com atenção às medidas e ao estado
+                            de cada peça.
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- SERVIÇO 04 -->
+
+                    <article class="servico-card">
+
+                        <span class="servico-numero">
+                            04
+                        </span>
+
+                        <h3>
+                            Virabrequins
+                        </h3>
+
+                        <p>
+                            Inspeção, recuperação e retífica
+                            de virabrequins seguindo especificações
+                            técnicas adequadas.
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- SERVIÇO 05 -->
+
+                    <article class="servico-card">
+
+                        <span class="servico-numero">
+                            05
+                        </span>
+
+                        <h3>
+                            Bielas e Componentes
+                        </h3>
+
+                        <p>
+                            Avaliação e recuperação de componentes
+                            importantes para o funcionamento
+                            correto do conjunto do motor.
+                        </p>
+
+                    </article>
+
+
+
+                    <!-- SERVIÇO 06 -->
+
+                    <article class="servico-card">
+
+                        <span class="servico-numero">
+                            06
+                        </span>
+
+                        <h3>
+                            Revisão e Recuperação
+                        </h3>
+
+                        <p>
+                            Análise técnica de peças e componentes
+                            para identificar desgaste e definir
+                            a melhor solução para cada serviço.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+
+                <div class="servicos-cta">
 
                     <p>
-                        Serviços especializados em cabeçotes para
-                        recuperar vedação, funcionamento e desempenho
-                        do conjunto.
+                        Não sabe exatamente qual serviço seu motor precisa?
                     </p>
 
-                </article>
+                    <a
+                        href="https://wa.me/554335465709?text=Olá%2C%20vim%20pelo%20site%20da%20Retífica%20Colinas%20e%20gostaria%20de%20tirar%20uma%20dúvida%20sobre%20um%20serviço."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Fale com a Retífica Colinas
+                    </a>
 
+                </div>
 
-                <!-- 03 -->
-
-                <article class="servico-card">
-
-                    <span>
-                        03
-                    </span>
-
-                    <h3>
-                        Retífica de Blocos
-                    </h3>
-
-                    <p>
-                        Usinagem e recuperação de blocos de motores
-                        com precisão, cuidado e controle das medidas.
-                    </p>
-
-                </article>
-
-
-                <!-- 04 -->
-
-                <article class="servico-card">
-
-                    <span>
-                        04
-                    </span>
-
-                    <h3>
-                        Virabrequins
-                    </h3>
-
-                    <p>
-                        Avaliação e recuperação de virabrequins,
-                        respeitando medidas e especificações técnicas
-                        necessárias para o funcionamento correto.
-                    </p>
-
-                </article>
-
-
-                <!-- 05 -->
-
-                <article class="servico-card">
-
-                    <span>
-                        05
-                    </span>
-
-                    <h3>
-                        Bielas e Componentes
-                    </h3>
-
-                    <p>
-                        Recuperação e análise de componentes essenciais
-                        para segurança, desempenho e funcionamento
-                        adequado do motor.
-                    </p>
-
-                </article>
-
-
-                <!-- 06 -->
-
-                <article class="servico-card">
-
-                    <span>
-                        06
-                    </span>
-
-                    <h3>
-                        Revisão e Recuperação
-                    </h3>
-
-                    <p>
-                        Inspeção cuidadosa das peças para identificar
-                        desgastes e definir a solução adequada para
-                        cada serviço.
-                    </p>
-
-                </article>
 
             </div>
 
         </section>
 
 
+
         <!-- =================================================
              SOBRE
         ================================================== -->
 
-        <section id="sobre">
+        <section
+            id="sobre"
+            class="secao sobre"
+        >
 
-            <div class="sobre-conteudo">
+            <div class="container sobre-container">
 
 
-                <!-- TEXTO -->
+                <!-- IMAGEM -->
 
-                <div class="sobre-texto">
+                <div class="sobre-imagem">
+
+                    <img
+                        src="img/oficina.jpg"
+                        alt="Oficina da Retífica Colinas"
+                        loading="lazy"
+                    >
+
+                    <div class="sobre-imagem-detalhe">
+
+                        <strong>
+                            Retífica Colinas
+                        </strong>
+
+                        <span>
+                            Ibaiti - Paraná
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONTEÚDO -->
+
+                <div class="sobre-conteudo">
+
 
                     <p class="destaque">
                         QUEM SOMOS
@@ -339,33 +553,35 @@
 
 
                     <h2>
-                        Sobre a Retífica Colinas
+                        Experiência, cuidado e precisão
+                        em cada serviço
                     </h2>
 
 
                     <p>
-                        Na Retífica Colinas, cada motor recebe atenção,
-                        precisão e cuidado em todas as etapas do serviço.
+                        Na Retífica Colinas, cada motor recebe
+                        atenção em todas as etapas do serviço.
                     </p>
 
 
                     <p>
-                        Trabalhamos com retífica e recuperação de
-                        componentes, buscando entregar um serviço
-                        confiável, técnico e de qualidade.
+                        Trabalhamos com retífica e recuperação
+                        de componentes buscando entregar um trabalho
+                        técnico, confiável e adequado à necessidade
+                        de cada cliente.
                     </p>
 
 
                     <p>
-                        Nosso compromisso é encontrar a solução adequada
-                        para cada cliente, preservando o desempenho e a
-                        durabilidade do motor.
+                        Nosso compromisso é oferecer soluções que
+                        contribuam para o desempenho, funcionamento
+                        e durabilidade do motor.
                     </p>
 
 
-                    <!-- DESTAQUES -->
 
                     <div class="sobre-destaques">
+
 
                         <div>
 
@@ -374,7 +590,8 @@
                             </strong>
 
                             <span>
-                                em cada serviço
+                                cuidado com medidas
+                                e componentes
                             </span>
 
                         </div>
@@ -387,7 +604,8 @@
                             </strong>
 
                             <span>
-                                do início ao fim
+                                atenção em todas
+                                as etapas
                             </span>
 
                         </div>
@@ -400,81 +618,160 @@
                             </strong>
 
                             <span>
-                                no seu motor
+                                atendimento direto
+                                e profissional
                             </span>
 
                         </div>
 
+
                     </div>
 
-                </div>
-
-
-                <!-- FOTO -->
-
-                <div class="sobre-imagem">
-
-                    <img
-                        src="img/oficina.jpg"
-                        alt="Equipe e oficina da Retífica Colinas em Ibaiti"
-                        loading="lazy"
-                    >
 
                 </div>
+
 
             </div>
 
         </section>
 
 
+
+        <!-- =================================================
+             CHAMADA PARA ORÇAMENTO
+        ================================================== -->
+
+        <section class="cta-orcamento">
+
+            <div class="container cta-orcamento-container">
+
+
+                <div>
+
+                    <p class="destaque">
+                        PRECISA DE UM ORÇAMENTO?
+                    </p>
+
+                    <h2>
+                        Fale diretamente com nossa equipe
+                    </h2>
+
+                    <p>
+                        Entre em contato pelo WhatsApp e conte
+                        o que você precisa.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="https://wa.me/554335465709?text=Olá%2C%20vim%20pelo%20site%20da%20Retífica%20Colinas%20e%20gostaria%20de%20solicitar%20um%20orçamento."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="botao botao-principal"
+                >
+                    Chamar no WhatsApp
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+
         <!-- =================================================
              CONTATO
         ================================================== -->
 
-        <section id="contato">
+        <section
+            id="contato"
+            class="secao contato"
+        >
 
-            <div class="contato-conteudo">
+            <div class="container">
 
 
-                <!-- CONTATO -->
+                <div class="secao-cabecalho">
 
-                <div class="contato-texto">
 
-                    <p class="destaque">
-                        FALE CONOSCO
+                    <div>
+
+                        <p class="destaque">
+                            FALE CONOSCO
+                        </p>
+
+                        <h2>
+                            Entre em contato
+                        </h2>
+
+                    </div>
+
+
+                    <p class="secao-descricao">
+                        Solicite informações, tire dúvidas
+                        ou converse com a equipe da Retífica Colinas.
                     </p>
 
 
-                    <h2>
-                        Solicite seu orçamento
-                    </h2>
+                </div>
 
 
-                    <p>
-                        Precisa de um serviço de retífica ou quer
-                        tirar uma dúvida?
-                    </p>
+
+                <div class="contato-grid">
 
 
-                    <p>
-                        Entre em contato diretamente com a equipe
-                        da Retífica Colinas.
-                    </p>
+                    <!-- CONTATOS -->
+
+                    <div class="contato-cards">
 
 
-                    <div class="contato-botoes">
+                        <!-- TELEFONE -->
+
+                        <a
+                            href="tel:+554335465709"
+                            class="contato-card"
+                        >
+
+                            <span class="contato-label">
+                                Telefone
+                            </span>
+
+                            <strong>
+                                (43) 3546-5709
+                            </strong>
+
+                            <small>
+                                Toque para ligar
+                            </small>
+
+                        </a>
+
 
 
                         <!-- WHATSAPP -->
 
                         <a
-                            href="https://wa.me/554335465709?text=Olá%2C%20vim%20pelo%20site%20da%20Retífica%20Colinas%20e%20gostaria%20de%20solicitar%20um%20orçamento."
+                            href="https://wa.me/554335465709?text=Olá%2C%20vim%20pelo%20site%20da%20Retífica%20Colinas."
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="botao-principal"
+                            class="contato-card"
                         >
-                            Falar pelo WhatsApp
+
+                            <span class="contato-label">
+                                WhatsApp
+                            </span>
+
+                            <strong>
+                                Falar com a equipe
+                            </strong>
+
+                            <small>
+                                Envie uma mensagem
+                            </small>
+
                         </a>
+
 
 
                         <!-- INSTAGRAM -->
@@ -483,85 +780,98 @@
                             href="https://www.instagram.com/retificacolinasibt/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="botao-instagram"
+                            class="contato-card"
                         >
-                            Instagram
+
+                            <span class="contato-label">
+                                Instagram
+                            </span>
+
+                            <strong>
+                                @retificacolinasibt
+                            </strong>
+
+                            <small>
+                                Acompanhe nosso trabalho
+                            </small>
+
                         </a>
 
-                    </div>
-
-                </div>
 
 
-                <!-- =================================================
-                     INFORMAÇÕES DA EMPRESA
-                ================================================== -->
+                        <!-- ENDEREÇO -->
 
-                <div class="contato-info">
+                        <a
+                            href="https://www.google.com/maps/search/?api=1&query=Avenida+Governador+Paulo+Cruz+Pimentel+718+Ibaiti+PR+84900000"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contato-card contato-card-endereco"
+                        >
 
+                            <span class="contato-label">
+                                Endereço
+                            </span>
 
-                    <!-- TELEFONE -->
-
-                    <div class="info-item">
-
-                        <span>
-                            Telefone / WhatsApp
-                        </span>
-
-                        <strong>
-                            (43) 3546-5709
-                        </strong>
-
-                    </div>
-
-
-                    <!-- ENDEREÇO -->
-
-                    <div class="info-item">
-
-                        <span>
-                            Endereço
-                        </span>
-
-                        <strong>
-
-                            <a
-                                href="https://www.google.com/maps/search/?api=1&query=Avenida+Governador+Paulo+Cruz+Pimentel+718+Ibaiti+PR+84900000"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="link-endereco"
-                            >
+                            <strong>
                                 Av. Governador Paulo Cruz Pimentel, 718
-                                <br>
-                                Ibaiti - PR, 84900-000
-                            </a>
+                            </strong>
 
-                        </strong>
+                            <small>
+                                Ibaiti - PR • CEP 84900-000
+                            </small>
+
+                        </a>
+
+
+                    </div>
+
+
+
+                    <!-- BLOCO VISUAL -->
+
+                    <div class="contato-destaque">
+
+
+                        <p class="destaque">
+                            RETÍFICA COLINAS
+                        </p>
+
+
+                        <h3>
+                            Seu motor em boas mãos.
+                        </h3>
+
+
+                        <p>
+                            Entre em contato para saber mais
+                            sobre nossos serviços e solicitar
+                            uma avaliação.
+                        </p>
+
+
+                        <a
+                            href="https://wa.me/554335465709?text=Olá%2C%20vim%20pelo%20site%20da%20Retífica%20Colinas%20e%20gostaria%20de%20mais%20informações."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="botao botao-principal"
+                        >
+                            Falar agora
+                        </a>
+
 
                     </div>
 
-
-                    <!-- ATENDIMENTO -->
-
-                    <div class="info-item">
-
-                        <span>
-                            Atendimento
-                        </span>
-
-                        <strong>
-                            Consulte horários pelo WhatsApp
-                        </strong>
-
-                    </div>
 
                 </div>
+
 
             </div>
 
         </section>
 
+
     </main>
+
 
 
     <!-- =====================================================
@@ -576,8 +886,19 @@
         aria-label="Falar com a Retífica Colinas pelo WhatsApp"
         title="Falar pelo WhatsApp"
     >
-        WA
+
+        <svg
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+        >
+            <path
+                fill="currentColor"
+                d="M16.04 3C9.39 3 4 8.28 4 14.79c0 2.29.67 4.52 1.94 6.43L4 28l7.02-1.82a12.2 12.2 0 0 0 5.02 1.07h.01C22.7 27.25 28 21.97 28 15.46 28 8.95 22.69 3 16.04 3Zm0 21.95a9.93 9.93 0 0 1-4.83-1.25l-.35-.2-4.17 1.08 1.11-4.02-.23-.37a9.54 9.54 0 0 1-1.51-5.16c0-5.27 4.43-9.56 9.88-9.56s9.88 4.29 9.88 9.56-4.43 9.92-9.78 9.92Zm5.42-7.17c-.3-.14-1.76-.85-2.03-.94-.27-.1-.47-.14-.67.14-.2.29-.77.94-.94 1.13-.17.19-.35.22-.64.07-.3-.14-1.25-.45-2.38-1.44a8.83 8.83 0 0 1-1.65-2c-.17-.29-.02-.44.13-.58.13-.13.3-.34.44-.51.15-.17.2-.29.3-.48.1-.19.05-.36-.02-.5-.08-.15-.67-1.57-.92-2.15-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.36-.27.29-1.04 1-1.04 2.44s1.07 2.83 1.22 3.02c.15.19 2.1 3.14 5.09 4.4.71.3 1.27.49 1.7.63.71.22 1.36.19 1.87.12.57-.08 1.76-.7 2.01-1.38.25-.68.25-1.26.17-1.38-.07-.12-.27-.19-.57-.33Z"
+            />
+        </svg>
+
     </a>
+
 
 
     <!-- =====================================================
@@ -587,23 +908,30 @@
     <footer>
 
 
-        <div class="footer-conteudo">
+        <div class="container footer-container">
 
 
-            <div>
+            <div class="footer-marca">
 
-                <strong>
-                    Retífica Colinas
-                </strong>
+                <img
+                    src="img/logo.png"
+                    alt="Retífica Colinas"
+                >
 
                 <p>
-                    Precisão, qualidade e confiança.
+                    Precisão, qualidade e confiança
+                    na retífica e recuperação de motores.
                 </p>
 
             </div>
 
 
-            <div class="footer-links">
+
+            <div class="footer-coluna">
+
+                <strong>
+                    Navegação
+                </strong>
 
                 <a href="#inicio">
                     Início
@@ -623,19 +951,58 @@
 
             </div>
 
+
+
+            <div class="footer-coluna">
+
+                <strong>
+                    Contato
+                </strong>
+
+                <a href="tel:+554335465709">
+                    (43) 3546-5709
+                </a>
+
+                <a
+                    href="https://www.instagram.com/retificacolinasibt/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Instagram
+                </a>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Avenida+Governador+Paulo+Cruz+Pimentel+718+Ibaiti+PR+84900000"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Av. Gov. Paulo Cruz Pimentel, 718
+                </a>
+
+            </div>
+
+
         </div>
+
 
 
         <div class="footer-copy">
 
-            <p>
-                © 2026 Retífica Colinas.
-                Todos os direitos reservados.
-            </p>
+            <div class="container">
+
+                <p>
+                    © <span id="ano-atual">2026</span>
+                    Retífica Colinas.
+                    Todos os direitos reservados.
+                </p>
+
+            </div>
 
         </div>
 
+
     </footer>
+
 
 
     <!-- =====================================================
@@ -643,6 +1010,7 @@
     ====================================================== -->
 
     <script src="script.js"></script>
+
 
 </body>
 

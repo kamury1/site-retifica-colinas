@@ -1,6 +1,7 @@
 /* =========================================================
    RETÍFICA COLINAS
    SCRIPT.JS
+   Menu, navegação, animações e melhorias de experiência
 ========================================================= */
 
 
@@ -8,48 +9,132 @@
    ELEMENTOS PRINCIPAIS
 ========================================================= */
 
+const header = document.querySelector(".header-principal");
+
 const menuToggle = document.querySelector(".menu-toggle");
-const nav = document.querySelector("nav");
-const navLinks = document.querySelectorAll("nav a");
-const header = document.querySelector("header");
-const sections = document.querySelectorAll("main section");
+
+const menuPrincipal = document.querySelector(".menu-principal");
+
+const linksMenu = document.querySelectorAll(
+    '.menu-principal a[href^="#"]'
+);
+
+const linksInternos = document.querySelectorAll(
+    'a[href^="#"]'
+);
+
+const secoes = document.querySelectorAll(
+    "main section[id]"
+);
 
 
 /* =========================================================
    MENU MOBILE
 ========================================================= */
 
-if (menuToggle && nav) {
-    menuToggle.addEventListener("click", () => {
-        const menuAberto = nav.classList.toggle("ativo");
+function abrirMenu() {
 
-        menuToggle.setAttribute(
-            "aria-expanded",
-            menuAberto ? "true" : "false"
-        );
+    if (!menuPrincipal || !menuToggle) {
+        return;
+    }
 
-        menuToggle.textContent = menuAberto ? "✕" : "☰";
-    });
+    menuPrincipal.classList.add("ativo");
+
+    menuToggle.setAttribute(
+        "aria-expanded",
+        "true"
+    );
+
+    menuToggle.setAttribute(
+        "aria-label",
+        "Fechar menu"
+    );
+
+    menuToggle.textContent = "✕";
+}
+
+
+
+function fecharMenu() {
+
+    if (!menuPrincipal || !menuToggle) {
+        return;
+    }
+
+    menuPrincipal.classList.remove("ativo");
+
+    menuToggle.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    menuToggle.setAttribute(
+        "aria-label",
+        "Abrir menu"
+    );
+
+    menuToggle.textContent = "☰";
+}
+
+
+
+function alternarMenu() {
+
+    if (!menuPrincipal) {
+        return;
+    }
+
+    const menuAberto =
+        menuPrincipal.classList.contains("ativo");
+
+    if (menuAberto) {
+
+        fecharMenu();
+
+    } else {
+
+        abrirMenu();
+
+    }
+
 }
 
 
 /* =========================================================
-   FECHAR MENU AO CLICAR EM UM LINK
+   CLIQUE NO BOTÃO MOBILE
 ========================================================= */
 
-navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-        if (!nav || !menuToggle) return;
+if (menuToggle) {
 
-        nav.classList.remove("ativo");
+    menuToggle.addEventListener(
+        "click",
+        (event) => {
 
-        menuToggle.setAttribute(
-            "aria-expanded",
-            "false"
-        );
+            event.stopPropagation();
 
-        menuToggle.textContent = "☰";
-    });
+            alternarMenu();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FECHAR MENU AO CLICAR EM LINK
+========================================================= */
+
+linksMenu.forEach((link) => {
+
+    link.addEventListener(
+        "click",
+        () => {
+
+            fecharMenu();
+
+        }
+    );
+
 });
 
 
@@ -57,343 +142,500 @@ navLinks.forEach((link) => {
    FECHAR MENU AO CLICAR FORA
 ========================================================= */
 
-document.addEventListener("click", (event) => {
-    if (!nav || !menuToggle) return;
-
-    const menuAberto = nav.classList.contains("ativo");
-
-    if (!menuAberto) return;
-
-    const clicouNoMenu = nav.contains(event.target);
-    const clicouNoBotao = menuToggle.contains(event.target);
-
-    if (!clicouNoMenu && !clicouNoBotao) {
-        nav.classList.remove("ativo");
-
-        menuToggle.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-        menuToggle.textContent = "☰";
-    }
-});
-
-
-/* =========================================================
-   FECHAR MENU AO REDIMENSIONAR
-========================================================= */
-
-window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) {
-        if (nav) {
-            nav.classList.remove("ativo");
-        }
-
-        if (menuToggle) {
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-            menuToggle.textContent = "☰";
-        }
-    }
-});
-
-
-/* =========================================================
-   ROLAGEM SUAVE COM COMPENSAÇÃO DO HEADER
-========================================================= */
-
-const linksInternos = document.querySelectorAll(
-    'a[href^="#"]'
-);
-
-linksInternos.forEach((link) => {
-    link.addEventListener("click", (event) => {
-        const destinoId = link.getAttribute("href");
+document.addEventListener(
+    "click",
+    (event) => {
 
         if (
-            !destinoId ||
-            destinoId === "#"
+            !menuPrincipal ||
+            !menuToggle
         ) {
             return;
         }
 
-        const destino = document.querySelector(destinoId);
+        const menuAberto =
+            menuPrincipal.classList.contains("ativo");
 
-        if (!destino) {
+        if (!menuAberto) {
             return;
         }
 
-        event.preventDefault();
+        const clicouMenu =
+            menuPrincipal.contains(event.target);
 
-        const alturaHeader =
-            header?.offsetHeight || 0;
+        const clicouBotao =
+            menuToggle.contains(event.target);
 
-        const posicao =
-            destino.getBoundingClientRect().top +
-            window.scrollY -
-            alturaHeader;
+        if (
+            !clicouMenu &&
+            !clicouBotao
+        ) {
 
-        window.scrollTo({
-            top: posicao,
-            behavior: "smooth"
-        });
-    });
+            fecharMenu();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FECHAR MENU COM ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (event.key !== "Escape") {
+            return;
+        }
+
+        if (
+            menuPrincipal &&
+            menuPrincipal.classList.contains("ativo")
+        ) {
+
+            fecharMenu();
+
+            if (menuToggle) {
+                menuToggle.focus();
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REDIMENSIONAMENTO
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            window.innerWidth > 768
+        ) {
+
+            fecharMenu();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ROLAGEM SUAVE
+   Compensação do header fixo
+========================================================= */
+
+linksInternos.forEach((link) => {
+
+    link.addEventListener(
+        "click",
+        (event) => {
+
+            const destinoId =
+                link.getAttribute("href");
+
+            if (
+                !destinoId ||
+                destinoId === "#"
+            ) {
+                return;
+            }
+
+            const destino =
+                document.querySelector(destinoId);
+
+            if (!destino) {
+                return;
+            }
+
+            event.preventDefault();
+
+
+            const alturaHeader =
+                header?.offsetHeight || 0;
+
+
+            const posicaoDestino =
+                destino.getBoundingClientRect().top +
+                window.scrollY -
+                alturaHeader;
+
+
+            window.scrollTo({
+
+                top: posicaoDestino,
+
+                behavior: "smooth"
+
+            });
+
+        }
+    );
+
 });
 
 
 /* =========================================================
-   DESTACAR ITEM ATIVO DO MENU
+   HEADER AO ROLAR
+========================================================= */
+
+function atualizarHeader() {
+
+    if (!header) {
+        return;
+    }
+
+    if (
+        window.scrollY > 30
+    ) {
+
+        header.classList.add("rolando");
+
+    } else {
+
+        header.classList.remove("rolando");
+
+    }
+
+}
+
+
+/* =========================================================
+   DESTACAR ITEM DO MENU
 ========================================================= */
 
 function atualizarMenuAtivo() {
-    if (!sections.length) return;
+
+    if (!secoes.length) {
+        return;
+    }
+
 
     let secaoAtual = "";
+
 
     const alturaHeader =
         header?.offsetHeight || 0;
 
-    const posicaoScroll =
+
+    const pontoLeitura =
         window.scrollY +
         alturaHeader +
         120;
 
-    sections.forEach((section) => {
-        const topo = section.offsetTop;
-        const altura = section.offsetHeight;
+
+    secoes.forEach((secao) => {
+
+        const inicio =
+            secao.offsetTop;
+
+        const fim =
+            inicio +
+            secao.offsetHeight;
+
 
         if (
-            posicaoScroll >= topo &&
-            posicaoScroll < topo + altura
+            pontoLeitura >= inicio &&
+            pontoLeitura < fim
         ) {
-            secaoAtual = section.id;
+
+            secaoAtual =
+                secao.id;
+
         }
+
     });
 
-    navLinks.forEach((link) => {
+
+    linksMenu.forEach((link) => {
+
         link.classList.remove("ativo");
 
-        const destino = link.getAttribute("href");
 
-        if (destino === `#${secaoAtual}`) {
+        const href =
+            link.getAttribute("href");
+
+
+        if (
+            href === `#${secaoAtual}`
+        ) {
+
             link.classList.add("ativo");
+
         }
+
     });
+
 }
 
 
 /* =========================================================
-   EFEITO NO CABEÇALHO AO ROLAR
+   SCROLL OTIMIZADO
 ========================================================= */
 
-function atualizarCabecalho() {
-    if (!header) return;
+let scrollPendente = false;
 
-    if (window.scrollY > 40) {
-        header.classList.add("rolando");
-    } else {
-        header.classList.remove("rolando");
+
+function atualizarScroll() {
+
+    atualizarHeader();
+
+    atualizarMenuAtivo();
+
+    scrollPendente = false;
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (!scrollPendente) {
+
+            scrollPendente = true;
+
+            window.requestAnimationFrame(
+                atualizarScroll
+            );
+
+        }
+
     }
-}
-
-
-/* =========================================================
-   EVENTO DE SCROLL
-========================================================= */
-
-let scrollEmExecucao = false;
-
-window.addEventListener("scroll", () => {
-    if (scrollEmExecucao) return;
-
-    scrollEmExecucao = true;
-
-    window.requestAnimationFrame(() => {
-        atualizarMenuAtivo();
-        atualizarCabecalho();
-
-        scrollEmExecucao = false;
-    });
-});
-
-
-/* =========================================================
-   ANIMAÇÕES AO APARECER NA TELA
-========================================================= */
-
-const elementosAnimados = document.querySelectorAll(
-    ".servico-card, .sobre-texto, .sobre-imagem, .contato-texto, .contato-info"
 );
 
-if ("IntersectionObserver" in window) {
 
-    const observador = new IntersectionObserver(
-        (entradas, observer) => {
+/* =========================================================
+   ANIMAÇÕES AO ENTRAR NA TELA
+========================================================= */
 
-            entradas.forEach((entrada) => {
+const elementosAnimados =
+    document.querySelectorAll(
 
-                if (entrada.isIntersecting) {
+        [
+            ".secao-cabecalho",
+            ".servico-card",
+            ".servicos-cta",
+            ".sobre-imagem",
+            ".sobre-conteudo",
+            ".cta-orcamento-container",
+            ".contato-card",
+            ".contato-destaque",
+            ".footer-marca",
+            ".footer-coluna"
+        ].join(",")
 
-                    entrada.target.classList.add(
-                        "visivel"
-                    );
-
-                    observer.unobserve(
-                        entrada.target
-                    );
-                }
-
-            });
-
-        },
-        {
-            threshold: 0.12
-        }
     );
 
 
-    elementosAnimados.forEach((elemento) => {
+if (
+    "IntersectionObserver" in window
+) {
 
-        elemento.classList.add("animar");
+    const observador =
+        new IntersectionObserver(
 
-        observador.observe(elemento);
+            (entradas, observer) => {
 
-    });
+                entradas.forEach(
+                    (entrada) => {
+
+                        if (
+                            entrada.isIntersecting
+                        ) {
+
+                            entrada.target
+                                .classList
+                                .add("visivel");
+
+
+                            observer.unobserve(
+                                entrada.target
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+
+            {
+
+                threshold: 0.12,
+
+                rootMargin:
+                    "0px 0px -30px 0px"
+
+            }
+
+        );
+
+
+    elementosAnimados.forEach(
+        (elemento) => {
+
+            elemento
+                .classList
+                .add("animar");
+
+            observador.observe(
+                elemento
+            );
+
+        }
+    );
 
 } else {
 
     /*
-       Navegadores antigos:
-       mostra tudo normalmente.
+       Caso o navegador não suporte
+       IntersectionObserver.
     */
 
-    elementosAnimados.forEach((elemento) => {
+    elementosAnimados.forEach(
+        (elemento) => {
 
-        elemento.classList.add("visivel");
+            elemento
+                .classList
+                .add("visivel");
 
-    });
+        }
+    );
 
 }
 
 
 /* =========================================================
-   ANO AUTOMÁTICO NO RODAPÉ
+   ANO AUTOMÁTICO
 ========================================================= */
 
-const footerCopy = document.querySelector(
-    ".footer-copy p"
-);
+const anoAtualElemento =
+    document.querySelector("#ano-atual");
 
-if (footerCopy) {
 
-    const anoAtual =
+if (anoAtualElemento) {
+
+    anoAtualElemento.textContent =
         new Date().getFullYear();
 
-    footerCopy.textContent =
-        `© ${anoAtual} Retífica Colinas. Todos os direitos reservados.`;
-
 }
 
 
 /* =========================================================
-   LINKS EXTERNOS
+   SEGURANÇA DOS LINKS EXTERNOS
 ========================================================= */
 
-const linksExternos = document.querySelectorAll(
-    'a[target="_blank"]'
-);
+const linksExternos =
+    document.querySelectorAll(
+        'a[target="_blank"]'
+    );
+
 
 linksExternos.forEach((link) => {
-
-    /*
-       Garantia extra de segurança.
-    */
 
     const relAtual =
         link.getAttribute("rel") || "";
 
+
     const valoresRel =
-        new Set(relAtual.split(" ").filter(Boolean));
+        new Set(
+
+            relAtual
+                .split(" ")
+                .filter(Boolean)
+
+        );
+
 
     valoresRel.add("noopener");
+
     valoresRel.add("noreferrer");
 
+
     link.setAttribute(
+
         "rel",
-        Array.from(valoresRel).join(" ")
+
+        Array.from(valoresRel)
+            .join(" ")
+
     );
 
 });
 
 
 /* =========================================================
-   ACESSIBILIDADE DO MENU COM ESC
+   VOLTAR PARA O TOPO AO CLICAR NA LOGO
 ========================================================= */
 
-document.addEventListener("keydown", (event) => {
+const logo =
+    document.querySelector(".logo");
 
-    if (event.key !== "Escape") {
-        return;
-    }
 
-    if (!nav || !menuToggle) {
-        return;
-    }
+if (logo) {
 
-    if (nav.classList.contains("ativo")) {
+    logo.addEventListener(
+        "click",
+        () => {
 
-        nav.classList.remove("ativo");
+            fecharMenu();
 
-        menuToggle.setAttribute(
-            "aria-expanded",
-            "false"
-        );
+        }
+    );
 
-        menuToggle.textContent = "☰";
-
-        menuToggle.focus();
-    }
-
-});
+}
 
 
 /* =========================================================
-   ESTADO INICIAL DA PÁGINA
+   GARANTIR QUE O MENU MOBILE NÃO FIQUE PRESO
+   AO USAR VOLTAR/AVANÇAR DO NAVEGADOR
 ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
+window.addEventListener(
+    "pageshow",
     () => {
 
-        atualizarCabecalho();
-
-        /*
-           Pequeno atraso ajuda o navegador a calcular
-           corretamente as alturas das seções.
-        */
-
-        setTimeout(() => {
-
-            atualizarMenuAtivo();
-
-        }, 100);
+        fecharMenu();
 
     }
 );
 
 
 /* =========================================================
-   CARREGAMENTO COMPLETO
+   ESTADO INICIAL
 ========================================================= */
 
-window.addEventListener("load", () => {
+function iniciarSite() {
 
-    atualizarCabecalho();
+    atualizarHeader();
 
     atualizarMenuAtivo();
 
-});
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciarSite
+);
+
+
+window.addEventListener(
+    "load",
+    () => {
+
+        atualizarHeader();
+
+        atualizarMenuAtivo();
+
+    }
+);
