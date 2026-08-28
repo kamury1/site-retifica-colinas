@@ -757,30 +757,220 @@ main {
 
 .sobre-imagem {
     position: relative;
-
     min-width: 0;
+    width: 100%;
+    height: 470px;
+
+    display: block;
+    padding: 0;
+    overflow: hidden;
+
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 14px;
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.38);
+
+    cursor: zoom-in;
+    text-align: left;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.sobre-imagem::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.02) 45%,
+            rgba(0, 0, 0, 0.48) 100%
+        );
 }
 
 .sobre-imagem img {
     width: 100%;
-
-    height: 440px;
+    height: 100%;
 
     object-fit: cover;
+    object-position: center 38%;
 
-    /*
-       Corrigido com base no print.
-       Mostra melhor a fachada e as pessoas.
-    */
+    transition:
+        transform 0.55s ease,
+        filter 0.35s ease;
+}
 
-    object-position: center 32%;
+.sobre-imagem-overlay {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    z-index: 2;
 
-    border-radius: var(--raio);
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
 
-    border:
-        1px solid var(--borda-suave);
+    padding: 10px 14px;
 
-    box-shadow: var(--sombra);
+    background: rgba(8, 8, 8, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    backdrop-filter: blur(8px);
+
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+
+    opacity: 0.88;
+    transform: translateY(2px);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.sobre-imagem-icone {
+    color: var(--cor-laranja-claro);
+    font-size: 18px;
+    line-height: 1;
+}
+
+.sobre-imagem:hover {
+    transform: translateY(-4px);
+    border-color: rgba(230, 57, 0, 0.38);
+    box-shadow: 0 28px 65px rgba(0, 0, 0, 0.48);
+}
+
+.sobre-imagem:hover img {
+    transform: scale(1.035);
+    filter: brightness(1.04);
+}
+
+.sobre-imagem:hover .sobre-imagem-overlay {
+    opacity: 1;
+    transform: translateY(0);
+    background: rgba(10, 10, 10, 0.90);
+}
+
+.sobre-imagem:focus-visible {
+    outline: 3px solid var(--cor-laranja-claro);
+    outline-offset: 5px;
+}
+
+
+/* =========================================================
+   FOTO AMPLIADA
+========================================================= */
+
+.foto-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 28px;
+
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(8px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.28s ease,
+        visibility 0.28s ease;
+}
+
+.foto-modal.ativo {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.foto-modal-conteudo {
+    width: min(1100px, 94vw);
+    max-height: 90vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    transform: scale(0.96);
+    transition: transform 0.28s ease;
+}
+
+.foto-modal.ativo .foto-modal-conteudo {
+    transform: scale(1);
+}
+
+.foto-modal-conteudo img {
+    width: 100%;
+    max-height: 82vh;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.62);
+}
+
+.foto-modal-conteudo p {
+    color: #cfcfcf;
+    font-size: 14px;
+    text-align: center;
+}
+
+.foto-modal-fechar {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 5001;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(20, 20, 20, 0.90);
+    color: #ffffff;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 50%;
+
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.foto-modal-fechar:hover {
+    background: var(--cor-laranja);
+    border-color: var(--cor-laranja);
+    transform: rotate(90deg);
+}
+
+body.modal-aberto {
+    overflow: hidden;
 }
 
 
@@ -1246,8 +1436,8 @@ footer {
         gap: 42px;
     }
 
-    .sobre-imagem img {
-        height: 420px;
+    .sobre-imagem {
+        height: 430px;
     }
 
     .contato-grid {
@@ -1410,18 +1600,40 @@ footer {
     }
 
 
-    /* SOBRE */
+/* SOBRE */
 
-    .sobre-container {
-        grid-template-columns: 1fr;
+.sobre {
+    padding-top: 32px;
+    padding-bottom: 70px;
+}
 
-        gap: 36px;
+.sobre-container {
+    grid-template-columns: 1fr;
+    gap: 36px;
+}
+    .sobre-imagem {
+        height: 390px;
     }
 
     .sobre-imagem img {
-        height: 390px;
+        object-position: center 34%;
+    }
 
-        object-position: center 30%;
+    .sobre-imagem-overlay {
+        left: 14px;
+        bottom: 14px;
+        padding: 9px 12px;
+    }
+
+    .foto-modal {
+        padding: 16px;
+    }
+
+    .foto-modal-fechar {
+        top: 12px;
+        right: 12px;
+        width: 44px;
+        height: 44px;
     }
 
     .sobre-destaques {
@@ -1517,10 +1729,17 @@ footer {
         padding: 24px;
     }
 
-    .sobre-imagem img {
-        height: 320px;
+    .sobre-imagem {
+        height: 330px;
+        border-radius: 11px;
+    }
 
-        object-position: center 28%;
+    .sobre-imagem img {
+        object-position: center 32%;
+    }
+
+    .sobre-imagem-texto {
+        font-size: 12px;
     }
 
     .contato-destaque {

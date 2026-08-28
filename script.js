@@ -3,620 +3,479 @@
    SCRIPT.JS FINAL
 ========================================================= */
 
-
-/* =========================================================
-   ELEMENTOS PRINCIPAIS
-========================================================= */
-
-const header = document.querySelector(".header-principal");
-
-const menuToggle = document.querySelector(".menu-toggle");
-
-const menuPrincipal = document.querySelector(".menu-principal");
-
-const linksMenu = document.querySelectorAll(
-    '.menu-principal a[href^="#"]'
-);
-
-const linksInternos = document.querySelectorAll(
-    'a[href^="#"]'
-);
-
-const secoes = document.querySelectorAll(
-    "main section[id]"
-);
+document.addEventListener("DOMContentLoaded", () => {
 
 
-/* =========================================================
-   MENU MOBILE
-========================================================= */
+    /* =====================================================
+       ELEMENTOS PRINCIPAIS
+    ====================================================== */
 
-function abrirMenu() {
+    const header = document.querySelector(".header-principal");
 
-    if (!menuPrincipal || !menuToggle) {
-        return;
+    const botaoMenu = document.querySelector(".menu-toggle");
+
+    const menu = document.querySelector(".menu-principal");
+
+    const linksMenu = document.querySelectorAll(
+        '.menu-principal a[href^="#"]'
+    );
+
+    const secoes = document.querySelectorAll(
+        "main section[id]"
+    );
+
+    const anoAtual = document.getElementById("ano-atual");
+
+
+    /* =====================================================
+       ANO AUTOMÁTICO
+    ====================================================== */
+
+    if (anoAtual) {
+
+        anoAtual.textContent =
+            new Date().getFullYear();
+
     }
 
-    menuPrincipal.classList.add("ativo");
 
-    menuToggle.setAttribute(
-        "aria-expanded",
-        "true"
-    );
+    /* =====================================================
+       HEADER AO ROLAR
+    ====================================================== */
 
-    menuToggle.setAttribute(
-        "aria-label",
-        "Fechar menu"
-    );
+    function atualizarHeader() {
 
-    menuToggle.textContent = "✕";
-}
+        if (!header) return;
 
+        if (window.scrollY > 30) {
 
-function fecharMenu() {
+            header.classList.add("rolando");
 
-    if (!menuPrincipal || !menuToggle) {
-        return;
-    }
+        } else {
 
-    menuPrincipal.classList.remove("ativo");
-
-    menuToggle.setAttribute(
-        "aria-expanded",
-        "false"
-    );
-
-    menuToggle.setAttribute(
-        "aria-label",
-        "Abrir menu"
-    );
-
-    menuToggle.textContent = "☰";
-}
-
-
-function alternarMenu() {
-
-    if (!menuPrincipal) {
-        return;
-    }
-
-    const aberto =
-        menuPrincipal.classList.contains("ativo");
-
-    if (aberto) {
-        fecharMenu();
-    } else {
-        abrirMenu();
-    }
-}
-
-
-/* =========================================================
-   CLIQUE NO BOTÃO DO MENU
-========================================================= */
-
-if (menuToggle) {
-
-    menuToggle.addEventListener(
-        "click",
-        (event) => {
-
-            event.stopPropagation();
-
-            alternarMenu();
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   FECHAR MENU AO ESCOLHER UM LINK
-========================================================= */
-
-linksMenu.forEach((link) => {
-
-    link.addEventListener(
-        "click",
-        () => {
-
-            fecharMenu();
-
-        }
-    );
-
-});
-
-
-/* =========================================================
-   FECHAR MENU AO CLICAR FORA
-========================================================= */
-
-document.addEventListener(
-    "click",
-    (event) => {
-
-        if (!menuPrincipal || !menuToggle) {
-            return;
-        }
-
-        const aberto =
-            menuPrincipal.classList.contains("ativo");
-
-        if (!aberto) {
-            return;
-        }
-
-        const clicouNoMenu =
-            menuPrincipal.contains(event.target);
-
-        const clicouNoBotao =
-            menuToggle.contains(event.target);
-
-        if (
-            !clicouNoMenu &&
-            !clicouNoBotao
-        ) {
-
-            fecharMenu();
+            header.classList.remove("rolando");
 
         }
 
     }
-);
 
 
-/* =========================================================
-   FECHAR COM ESC
-========================================================= */
+    atualizarHeader();
 
-document.addEventListener(
-    "keydown",
-    (event) => {
+    window.addEventListener(
+        "scroll",
+        atualizarHeader,
+        { passive: true }
+    );
 
-        if (event.key !== "Escape") {
-            return;
-        }
 
-        if (
-            menuPrincipal &&
-            menuPrincipal.classList.contains("ativo")
-        ) {
+    /* =====================================================
+       MENU MOBILE
+    ====================================================== */
 
-            fecharMenu();
+    function fecharMenu() {
 
-            if (menuToggle) {
-                menuToggle.focus();
+        if (!menu || !botaoMenu) return;
+
+        menu.classList.remove("ativo");
+
+        botaoMenu.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        botaoMenu.setAttribute(
+            "aria-label",
+            "Abrir menu"
+        );
+
+        botaoMenu.textContent = "☰";
+
+    }
+
+
+    function abrirMenu() {
+
+        if (!menu || !botaoMenu) return;
+
+        menu.classList.add("ativo");
+
+        botaoMenu.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        botaoMenu.setAttribute(
+            "aria-label",
+            "Fechar menu"
+        );
+
+        botaoMenu.textContent = "×";
+
+    }
+
+
+    if (botaoMenu && menu) {
+
+        botaoMenu.addEventListener(
+            "click",
+            () => {
+
+                const estaAberto =
+                    menu.classList.contains("ativo");
+
+                if (estaAberto) {
+
+                    fecharMenu();
+
+                } else {
+
+                    abrirMenu();
+
+                }
+
             }
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   REDIMENSIONAMENTO
-========================================================= */
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (window.innerWidth > 768) {
-            fecharMenu();
-        }
-
-    }
-);
-
-
-/* =========================================================
-   NAVEGAÇÃO SUAVE
-========================================================= */
-
-linksInternos.forEach((link) => {
-
-    link.addEventListener(
-        "click",
-        (event) => {
-
-            const destinoId =
-                link.getAttribute("href");
-
-            if (
-                !destinoId ||
-                destinoId === "#"
-            ) {
-                return;
-            }
-
-            const destino =
-                document.querySelector(destinoId);
-
-            if (!destino) {
-                return;
-            }
-
-            event.preventDefault();
-
-            const alturaHeader =
-                header?.offsetHeight || 0;
-
-            const posicaoDestino =
-                destino.getBoundingClientRect().top +
-                window.scrollY -
-                alturaHeader;
-
-            window.scrollTo({
-                top: posicaoDestino,
-                behavior: "smooth"
-            });
-
-        }
-    );
-
-});
-
-
-/* =========================================================
-   EFEITO DO HEADER
-========================================================= */
-
-function atualizarHeader() {
-
-    if (!header) {
-        return;
-    }
-
-    if (window.scrollY > 30) {
-
-        header.classList.add("rolando");
-
-    } else {
-
-        header.classList.remove("rolando");
+        );
 
     }
 
-}
 
-
-/* =========================================================
-   MENU ATIVO CONFORME A SEÇÃO
-========================================================= */
-
-function atualizarMenuAtivo() {
-
-    if (!secoes.length) {
-        return;
-    }
-
-    let secaoAtual = "";
-
-    const alturaHeader =
-        header?.offsetHeight || 0;
-
-    const pontoLeitura =
-        window.scrollY +
-        alturaHeader +
-        120;
-
-    secoes.forEach((secao) => {
-
-        const inicio =
-            secao.offsetTop;
-
-        const fim =
-            inicio +
-            secao.offsetHeight;
-
-        if (
-            pontoLeitura >= inicio &&
-            pontoLeitura < fim
-        ) {
-
-            secaoAtual =
-                secao.id;
-
-        }
-
-    });
-
-    /*
-       Caso esteja no final da página,
-       mantém Contato ativo.
-    */
-
-    const chegouNoFim =
-        window.innerHeight +
-        window.scrollY >=
-        document.documentElement.scrollHeight - 10;
-
-    if (chegouNoFim) {
-        secaoAtual = "contato";
-    }
+    /* =====================================================
+       FECHAR MENU AO CLICAR EM LINK
+    ====================================================== */
 
     linksMenu.forEach((link) => {
 
-        link.classList.remove("ativo");
+        link.addEventListener(
+            "click",
+            () => {
 
-        const href =
-            link.getAttribute("href");
+                fecharMenu();
 
-        if (
-            href === `#${secaoAtual}`
-        ) {
-
-            link.classList.add("ativo");
-
-        }
+            }
+        );
 
     });
 
-}
 
+    /* =====================================================
+       FECHAR MENU AO AUMENTAR A TELA
+    ====================================================== */
 
-/* =========================================================
-   SCROLL OTIMIZADO
-========================================================= */
-
-let scrollPendente = false;
-
-function atualizarScroll() {
-
-    atualizarHeader();
-
-    atualizarMenuAtivo();
-
-    scrollPendente = false;
-
-}
-
-window.addEventListener(
-    "scroll",
-    () => {
-
-        if (scrollPendente) {
-            return;
-        }
-
-        scrollPendente = true;
-
-        window.requestAnimationFrame(
-            atualizarScroll
-        );
-
-    }
-);
-
-
-/* =========================================================
-   ANIMAÇÕES AO ENTRAR NA TELA
-========================================================= */
-
-const elementosAnimados =
-    document.querySelectorAll(
-
-        [
-            ".secao-cabecalho",
-            ".servico-card",
-            ".servicos-cta",
-            ".sobre-imagem",
-            ".sobre-conteudo",
-            ".cta-orcamento-container",
-            ".contato-card",
-            ".contato-destaque",
-            ".footer-marca",
-            ".footer-coluna"
-        ].join(",")
-
-    );
-
-
-const usuarioPrefereMenosMovimento =
-    window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-
-if (usuarioPrefereMenosMovimento) {
-
-    elementosAnimados.forEach(
-        (elemento) => {
-
-            elemento.classList.add(
-                "visivel"
-            );
-
-        }
-    );
-
-} else if (
-    "IntersectionObserver" in window
-) {
-
-    const observador =
-        new IntersectionObserver(
-
-            (entradas, observer) => {
-
-                entradas.forEach(
-                    (entrada) => {
-
-                        if (
-                            entrada.isIntersecting
-                        ) {
-
-                            entrada.target
-                                .classList
-                                .add("visivel");
-
-                            observer.unobserve(
-                                entrada.target
-                            );
-
-                        }
-
-                    }
-                );
-
-            },
-
-            {
-                threshold: 0.12,
-
-                rootMargin:
-                    "0px 0px -25px 0px"
-            }
-
-        );
-
-    elementosAnimados.forEach(
-        (elemento) => {
-
-            elemento.classList.add(
-                "animar"
-            );
-
-            observador.observe(
-                elemento
-            );
-
-        }
-    );
-
-} else {
-
-    elementosAnimados.forEach(
-        (elemento) => {
-
-            elemento.classList.add(
-                "visivel"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ANO AUTOMÁTICO
-========================================================= */
-
-const anoAtual =
-    document.querySelector("#ano-atual");
-
-if (anoAtual) {
-
-    anoAtual.textContent =
-        new Date().getFullYear();
-
-}
-
-
-/* =========================================================
-   SEGURANÇA DOS LINKS EXTERNOS
-========================================================= */
-
-const linksExternos =
-    document.querySelectorAll(
-        'a[target="_blank"]'
-    );
-
-linksExternos.forEach((link) => {
-
-    const relAtual =
-        link.getAttribute("rel") || "";
-
-    const valoresRel =
-        new Set(
-            relAtual
-                .split(" ")
-                .filter(Boolean)
-        );
-
-    valoresRel.add("noopener");
-
-    valoresRel.add("noreferrer");
-
-    link.setAttribute(
-        "rel",
-        Array.from(valoresRel)
-            .join(" ")
-    );
-
-});
-
-
-/* =========================================================
-   LOGO
-========================================================= */
-
-const logo =
-    document.querySelector(".logo");
-
-if (logo) {
-
-    logo.addEventListener(
-        "click",
+    window.addEventListener(
+        "resize",
         () => {
 
-            fecharMenu();
+            if (window.innerWidth > 768) {
+
+                fecharMenu();
+
+            }
 
         }
     );
 
-}
+
+    /* =====================================================
+       LINK ATIVO CONFORME A SEÇÃO
+    ====================================================== */
+
+    function atualizarLinkAtivo() {
+
+        let secaoAtual = "";
+
+        const posicaoRolagem =
+            window.scrollY + 180;
 
 
-/* =========================================================
-   VOLTAR / AVANÇAR DO NAVEGADOR
-========================================================= */
+        secoes.forEach((secao) => {
 
-window.addEventListener(
-    "pageshow",
-    () => {
+            const topo =
+                secao.offsetTop;
 
-        fecharMenu();
+            const altura =
+                secao.offsetHeight;
 
-        atualizarHeader();
 
-        atualizarMenuAtivo();
+            if (
+                posicaoRolagem >= topo &&
+                posicaoRolagem <
+                topo + altura
+            ) {
+
+                secaoAtual =
+                    secao.getAttribute("id");
+
+            }
+
+        });
+
+
+        linksMenu.forEach((link) => {
+
+            link.classList.remove("ativo");
+
+            const destino =
+                link.getAttribute("href");
+
+
+            if (
+                destino ===
+                `#${secaoAtual}`
+            ) {
+
+                link.classList.add("ativo");
+
+            }
+
+        });
 
     }
-);
 
 
-/* =========================================================
-   ESTADO INICIAL
-========================================================= */
+    atualizarLinkAtivo();
 
-function iniciarSite() {
-
-    atualizarHeader();
-
-    atualizarMenuAtivo();
-
-}
+    window.addEventListener(
+        "scroll",
+        atualizarLinkAtivo,
+        { passive: true }
+    );
 
 
-document.addEventListener(
-    "DOMContentLoaded",
-    iniciarSite
-);
+    /* =====================================================
+       ANIMAÇÕES AO ROLAR
+    ====================================================== */
+
+    const elementosAnimados =
+        document.querySelectorAll(
+            ".servico-card, " +
+            ".sobre-imagem, " +
+            ".sobre-conteudo, " +
+            ".contato-card, " +
+            ".contato-destaque, " +
+            ".cta-orcamento-texto"
+        );
 
 
-window.addEventListener(
-    "load",
-    () => {
+    elementosAnimados.forEach(
+        (elemento) => {
 
-        atualizarHeader();
+            elemento.classList.add("animar");
 
-        atualizarMenuAtivo();
+        }
+    );
+
+
+    if ("IntersectionObserver" in window) {
+
+        const observador =
+            new IntersectionObserver(
+
+                (entradas, observer) => {
+
+                    entradas.forEach(
+                        (entrada) => {
+
+                            if (
+                                entrada.isIntersecting
+                            ) {
+
+                                entrada.target
+                                    .classList
+                                    .add("visivel");
+
+                                observer.unobserve(
+                                    entrada.target
+                                );
+
+                            }
+
+                        }
+                    );
+
+                },
+
+                {
+                    threshold: 0.12
+                }
+
+            );
+
+
+        elementosAnimados.forEach(
+            (elemento) => {
+
+                observador.observe(elemento);
+
+            }
+        );
+
+    } else {
+
+        elementosAnimados.forEach(
+            (elemento) => {
+
+                elemento.classList.add(
+                    "visivel"
+                );
+
+            }
+        );
 
     }
-);
+
+
+    /* =====================================================
+       FOTO DA EQUIPE - MODAL
+    ====================================================== */
+
+    const botaoAbrirFoto =
+        document.getElementById(
+            "abrir-foto-oficina"
+        );
+
+    const modalFoto =
+        document.getElementById(
+            "foto-modal"
+        );
+
+    const botaoFecharFoto =
+        document.getElementById(
+            "fechar-foto-modal"
+        );
+
+
+    let elementoFocadoAntes =
+        null;
+
+
+    function abrirFoto() {
+
+        if (!modalFoto) return;
+
+
+        elementoFocadoAntes =
+            document.activeElement;
+
+
+        modalFoto.classList.add(
+            "ativo"
+        );
+
+        modalFoto.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        document.body.classList.add(
+            "modal-aberto"
+        );
+
+
+        if (botaoFecharFoto) {
+
+            botaoFecharFoto.focus();
+
+        }
+
+    }
+
+
+    function fecharFoto() {
+
+        if (!modalFoto) return;
+
+
+        modalFoto.classList.remove(
+            "ativo"
+        );
+
+        modalFoto.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        document.body.classList.remove(
+            "modal-aberto"
+        );
+
+
+        if (elementoFocadoAntes) {
+
+            elementoFocadoAntes.focus();
+
+        }
+
+    }
+
+
+    if (botaoAbrirFoto) {
+
+        botaoAbrirFoto.addEventListener(
+            "click",
+            abrirFoto
+        );
+
+    }
+
+
+    if (botaoFecharFoto) {
+
+        botaoFecharFoto.addEventListener(
+            "click",
+            fecharFoto
+        );
+
+    }
+
+
+    /* =====================================================
+       FECHAR CLICANDO FORA DA FOTO
+    ====================================================== */
+
+    if (modalFoto) {
+
+        modalFoto.addEventListener(
+            "click",
+            (evento) => {
+
+                if (
+                    evento.target === modalFoto
+                ) {
+
+                    fecharFoto();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       FECHAR COM ESC
+    ====================================================== */
+
+    document.addEventListener(
+        "keydown",
+        (evento) => {
+
+            if (
+                evento.key === "Escape" &&
+                modalFoto &&
+                modalFoto.classList
+                    .contains("ativo")
+            ) {
+
+                fecharFoto();
+
+            }
+
+        }
+    );
+
+
+});

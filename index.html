@@ -559,15 +559,32 @@
 
                 <!-- FOTO -->
 
-                <div class="sobre-imagem">
+                <button
+                    class="sobre-imagem"
+                    id="abrir-foto-oficina"
+                    type="button"
+                    aria-label="Ampliar foto da equipe da Retífica Colinas"
+                >
 
                     <img
                         src="img/oficina.jpg"
-                        alt="Retífica Colinas em Ibaiti - Paraná"
+                        alt="Equipe da Retífica Colinas em frente à oficina em Ibaiti - Paraná"
                         loading="lazy"
                     >
 
-                </div>
+                    <span class="sobre-imagem-overlay" aria-hidden="true">
+
+                        <span class="sobre-imagem-icone">
+                            ⛶
+                        </span>
+
+                        <span class="sobre-imagem-texto">
+                            Ver foto
+                        </span>
+
+                    </span>
+
+                </button>
 
 
                 <!-- TEXTO -->
@@ -1056,6 +1073,47 @@
 
     </footer>
 
+
+
+
+
+    <!-- =====================================================
+         FOTO AMPLIADA
+    ====================================================== -->
+
+    <div
+        class="foto-modal"
+        id="foto-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Foto ampliada da equipe da Retífica Colinas"
+        aria-hidden="true"
+    >
+
+        <button
+            class="foto-modal-fechar"
+            id="fechar-foto-modal"
+            type="button"
+            aria-label="Fechar foto ampliada"
+        >
+            ×
+        </button>
+
+
+        <div class="foto-modal-conteudo">
+
+            <img
+                src="img/oficina.jpg"
+                alt="Equipe da Retífica Colinas em frente à oficina em Ibaiti - Paraná"
+            >
+
+            <p>
+                Retífica Colinas • Ibaiti - PR
+            </p>
+
+        </div>
+
+    </div>
 
 
     <!-- =====================================================
