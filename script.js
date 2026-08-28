@@ -1,7 +1,6 @@
 /* =========================================================
    RETÍFICA COLINAS
-   SCRIPT.JS
-   Menu, navegação, animações e melhorias de experiência
+   SCRIPT.JS FINAL
 ========================================================= */
 
 
@@ -54,7 +53,6 @@ function abrirMenu() {
 }
 
 
-
 function fecharMenu() {
 
     if (!menuPrincipal || !menuToggle) {
@@ -77,31 +75,25 @@ function fecharMenu() {
 }
 
 
-
 function alternarMenu() {
 
     if (!menuPrincipal) {
         return;
     }
 
-    const menuAberto =
+    const aberto =
         menuPrincipal.classList.contains("ativo");
 
-    if (menuAberto) {
-
+    if (aberto) {
         fecharMenu();
-
     } else {
-
         abrirMenu();
-
     }
-
 }
 
 
 /* =========================================================
-   CLIQUE NO BOTÃO MOBILE
+   CLIQUE NO BOTÃO DO MENU
 ========================================================= */
 
 if (menuToggle) {
@@ -121,7 +113,7 @@ if (menuToggle) {
 
 
 /* =========================================================
-   FECHAR MENU AO CLICAR EM LINK
+   FECHAR MENU AO ESCOLHER UM LINK
 ========================================================= */
 
 linksMenu.forEach((link) => {
@@ -146,29 +138,26 @@ document.addEventListener(
     "click",
     (event) => {
 
-        if (
-            !menuPrincipal ||
-            !menuToggle
-        ) {
+        if (!menuPrincipal || !menuToggle) {
             return;
         }
 
-        const menuAberto =
+        const aberto =
             menuPrincipal.classList.contains("ativo");
 
-        if (!menuAberto) {
+        if (!aberto) {
             return;
         }
 
-        const clicouMenu =
+        const clicouNoMenu =
             menuPrincipal.contains(event.target);
 
-        const clicouBotao =
+        const clicouNoBotao =
             menuToggle.contains(event.target);
 
         if (
-            !clicouMenu &&
-            !clicouBotao
+            !clicouNoMenu &&
+            !clicouNoBotao
         ) {
 
             fecharMenu();
@@ -180,7 +169,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   FECHAR MENU COM ESC
+   FECHAR COM ESC
 ========================================================= */
 
 document.addEventListener(
@@ -216,12 +205,8 @@ window.addEventListener(
     "resize",
     () => {
 
-        if (
-            window.innerWidth > 768
-        ) {
-
+        if (window.innerWidth > 768) {
             fecharMenu();
-
         }
 
     }
@@ -229,8 +214,7 @@ window.addEventListener(
 
 
 /* =========================================================
-   ROLAGEM SUAVE
-   Compensação do header fixo
+   NAVEGAÇÃO SUAVE
 ========================================================= */
 
 linksInternos.forEach((link) => {
@@ -258,23 +242,17 @@ linksInternos.forEach((link) => {
 
             event.preventDefault();
 
-
             const alturaHeader =
                 header?.offsetHeight || 0;
-
 
             const posicaoDestino =
                 destino.getBoundingClientRect().top +
                 window.scrollY -
                 alturaHeader;
 
-
             window.scrollTo({
-
                 top: posicaoDestino,
-
                 behavior: "smooth"
-
             });
 
         }
@@ -284,7 +262,7 @@ linksInternos.forEach((link) => {
 
 
 /* =========================================================
-   HEADER AO ROLAR
+   EFEITO DO HEADER
 ========================================================= */
 
 function atualizarHeader() {
@@ -293,9 +271,7 @@ function atualizarHeader() {
         return;
     }
 
-    if (
-        window.scrollY > 30
-    ) {
+    if (window.scrollY > 30) {
 
         header.classList.add("rolando");
 
@@ -309,7 +285,7 @@ function atualizarHeader() {
 
 
 /* =========================================================
-   DESTACAR ITEM DO MENU
+   MENU ATIVO CONFORME A SEÇÃO
 ========================================================= */
 
 function atualizarMenuAtivo() {
@@ -318,19 +294,15 @@ function atualizarMenuAtivo() {
         return;
     }
 
-
     let secaoAtual = "";
-
 
     const alturaHeader =
         header?.offsetHeight || 0;
-
 
     const pontoLeitura =
         window.scrollY +
         alturaHeader +
         120;
-
 
     secoes.forEach((secao) => {
 
@@ -340,7 +312,6 @@ function atualizarMenuAtivo() {
         const fim =
             inicio +
             secao.offsetHeight;
-
 
         if (
             pontoLeitura >= inicio &&
@@ -354,15 +325,26 @@ function atualizarMenuAtivo() {
 
     });
 
+    /*
+       Caso esteja no final da página,
+       mantém Contato ativo.
+    */
+
+    const chegouNoFim =
+        window.innerHeight +
+        window.scrollY >=
+        document.documentElement.scrollHeight - 10;
+
+    if (chegouNoFim) {
+        secaoAtual = "contato";
+    }
 
     linksMenu.forEach((link) => {
 
         link.classList.remove("ativo");
 
-
         const href =
             link.getAttribute("href");
-
 
         if (
             href === `#${secaoAtual}`
@@ -383,7 +365,6 @@ function atualizarMenuAtivo() {
 
 let scrollPendente = false;
 
-
 function atualizarScroll() {
 
     atualizarHeader();
@@ -394,20 +375,19 @@ function atualizarScroll() {
 
 }
 
-
 window.addEventListener(
     "scroll",
     () => {
 
-        if (!scrollPendente) {
-
-            scrollPendente = true;
-
-            window.requestAnimationFrame(
-                atualizarScroll
-            );
-
+        if (scrollPendente) {
+            return;
         }
+
+        scrollPendente = true;
+
+        window.requestAnimationFrame(
+            atualizarScroll
+        );
 
     }
 );
@@ -436,7 +416,25 @@ const elementosAnimados =
     );
 
 
-if (
+const usuarioPrefereMenosMovimento =
+    window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+
+if (usuarioPrefereMenosMovimento) {
+
+    elementosAnimados.forEach(
+        (elemento) => {
+
+            elemento.classList.add(
+                "visivel"
+            );
+
+        }
+    );
+
+} else if (
     "IntersectionObserver" in window
 ) {
 
@@ -456,7 +454,6 @@ if (
                                 .classList
                                 .add("visivel");
 
-
                             observer.unobserve(
                                 entrada.target
                             );
@@ -469,23 +466,20 @@ if (
             },
 
             {
-
                 threshold: 0.12,
 
                 rootMargin:
-                    "0px 0px -30px 0px"
-
+                    "0px 0px -25px 0px"
             }
 
         );
 
-
     elementosAnimados.forEach(
         (elemento) => {
 
-            elemento
-                .classList
-                .add("animar");
+            elemento.classList.add(
+                "animar"
+            );
 
             observador.observe(
                 elemento
@@ -496,17 +490,12 @@ if (
 
 } else {
 
-    /*
-       Caso o navegador não suporte
-       IntersectionObserver.
-    */
-
     elementosAnimados.forEach(
         (elemento) => {
 
-            elemento
-                .classList
-                .add("visivel");
+            elemento.classList.add(
+                "visivel"
+            );
 
         }
     );
@@ -518,13 +507,12 @@ if (
    ANO AUTOMÁTICO
 ========================================================= */
 
-const anoAtualElemento =
+const anoAtual =
     document.querySelector("#ano-atual");
 
+if (anoAtual) {
 
-if (anoAtualElemento) {
-
-    anoAtualElemento.textContent =
+    anoAtual.textContent =
         new Date().getFullYear();
 
 }
@@ -539,47 +527,37 @@ const linksExternos =
         'a[target="_blank"]'
     );
 
-
 linksExternos.forEach((link) => {
 
     const relAtual =
         link.getAttribute("rel") || "";
 
-
     const valoresRel =
         new Set(
-
             relAtual
                 .split(" ")
                 .filter(Boolean)
-
         );
-
 
     valoresRel.add("noopener");
 
     valoresRel.add("noreferrer");
 
-
     link.setAttribute(
-
         "rel",
-
         Array.from(valoresRel)
             .join(" ")
-
     );
 
 });
 
 
 /* =========================================================
-   VOLTAR PARA O TOPO AO CLICAR NA LOGO
+   LOGO
 ========================================================= */
 
 const logo =
     document.querySelector(".logo");
-
 
 if (logo) {
 
@@ -596,8 +574,7 @@ if (logo) {
 
 
 /* =========================================================
-   GARANTIR QUE O MENU MOBILE NÃO FIQUE PRESO
-   AO USAR VOLTAR/AVANÇAR DO NAVEGADOR
+   VOLTAR / AVANÇAR DO NAVEGADOR
 ========================================================= */
 
 window.addEventListener(
@@ -605,6 +582,10 @@ window.addEventListener(
     () => {
 
         fecharMenu();
+
+        atualizarHeader();
+
+        atualizarMenuAtivo();
 
     }
 );
