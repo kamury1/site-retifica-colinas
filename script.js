@@ -1,481 +1,226 @@
 /* =========================================================
-   RETÍFICA COLINAS
-   SCRIPT.JS FINAL
+   RETÍFICA COLINAS - SCRIPT.JS
+   Versão 2026 Comercial & Profissional
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
-
-    /* =====================================================
-       ELEMENTOS PRINCIPAIS
-    ====================================================== */
-
-    const header = document.querySelector(".header-principal");
-
-    const botaoMenu = document.querySelector(".menu-toggle");
-
-    const menu = document.querySelector(".menu-principal");
-
-    const linksMenu = document.querySelectorAll(
-        '.menu-principal a[href^="#"]'
-    );
-
-    const secoes = document.querySelectorAll(
-        "main section[id]"
-    );
-
-    const anoAtual = document.getElementById("ano-atual");
-
+    "use strict";
 
     /* =====================================================
-       ANO AUTOMÁTICO
+       1. ANO AUTOMÁTICO NO RODAPÉ
     ====================================================== */
-
-    if (anoAtual) {
-
-        anoAtual.textContent =
-            new Date().getFullYear();
-
+    const elAnoAtual = document.getElementById("ano-atual");
+    if (elAnoAtual) {
+        elAnoAtual.textContent = new Date().getFullYear();
     }
 
-
     /* =====================================================
-       HEADER AO ROLAR
+       2. HEADER COMPACTO AO ROLAR
     ====================================================== */
+    const header = document.getElementById("header-principal");
 
     function atualizarHeader() {
-
         if (!header) return;
-
-        if (window.scrollY > 30) {
-
+        if (window.scrollY > 24) {
             header.classList.add("rolando");
-
         } else {
-
             header.classList.remove("rolando");
-
         }
-
     }
 
-
+    window.addEventListener("scroll", atualizarHeader, { passive: true });
     atualizarHeader();
 
-    window.addEventListener(
-        "scroll",
-        atualizarHeader,
-        { passive: true }
-    );
-
-
     /* =====================================================
-       MENU MOBILE
+       3. MENU MOBILE & NAVEGAÇÃO
     ====================================================== */
+    const botaoMenu = document.getElementById("menu-toggle");
+    const menuPrincipal = document.getElementById("menu-principal");
+    const backdropMenu = document.getElementById("menu-backdrop");
+    const linksNavegacao = document.querySelectorAll(".menu-principal a");
 
-    function fecharMenu() {
-
-        if (!menu || !botaoMenu) return;
-
-        menu.classList.remove("ativo");
-
-        botaoMenu.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-        botaoMenu.setAttribute(
-            "aria-label",
-            "Abrir menu"
-        );
-
-        botaoMenu.textContent = "☰";
-
+    function abrirMenuMobile() {
+        if (!botaoMenu || !menuPrincipal) return;
+        botaoMenu.classList.add("aberto");
+        botaoMenu.setAttribute("aria-expanded", "true");
+        botaoMenu.setAttribute("aria-label", "Fechar menu de navegação");
+        menuPrincipal.classList.add("ativo");
+        if (backdropMenu) backdropMenu.classList.add("ativo");
     }
 
-
-    function abrirMenu() {
-
-        if (!menu || !botaoMenu) return;
-
-        menu.classList.add("ativo");
-
-        botaoMenu.setAttribute(
-            "aria-expanded",
-            "true"
-        );
-
-        botaoMenu.setAttribute(
-            "aria-label",
-            "Fechar menu"
-        );
-
-        botaoMenu.textContent = "×";
-
+    function fecharMenuMobile() {
+        if (!botaoMenu || !menuPrincipal) return;
+        botaoMenu.classList.remove("aberto");
+        botaoMenu.setAttribute("aria-expanded", "false");
+        botaoMenu.setAttribute("aria-label", "Abrir menu de navegação");
+        menuPrincipal.classList.remove("ativo");
+        if (backdropMenu) backdropMenu.classList.remove("ativo");
     }
 
-
-    if (botaoMenu && menu) {
-
-        botaoMenu.addEventListener(
-            "click",
-            () => {
-
-                const estaAberto =
-                    menu.classList.contains("ativo");
-
-                if (estaAberto) {
-
-                    fecharMenu();
-
-                } else {
-
-                    abrirMenu();
-
-                }
-
+    if (botaoMenu) {
+        botaoMenu.addEventListener("click", () => {
+            const estaAberto = botaoMenu.classList.contains("aberto");
+            if (estaAberto) {
+                fecharMenuMobile();
+            } else {
+                abrirMenuMobile();
             }
-        );
-
+        });
     }
 
+    // Fechar ao clicar no backdrop escuro
+    if (backdropMenu) {
+        backdropMenu.addEventListener("click", fecharMenuMobile);
+    }
 
-    /* =====================================================
-       FECHAR MENU AO CLICAR EM LINK
-    ====================================================== */
-
-    linksMenu.forEach((link) => {
-
-        link.addEventListener(
-            "click",
-            () => {
-
-                fecharMenu();
-
+    // Fechar ao clicar em qualquer link do menu
+    linksNavegacao.forEach((link) => {
+        link.addEventListener("click", () => {
+            if (window.innerWidth <= 768) {
+                fecharMenuMobile();
             }
-        );
-
+        });
     });
 
-
-    /* =====================================================
-       FECHAR MENU AO AUMENTAR A TELA
-    ====================================================== */
-
-    window.addEventListener(
-        "resize",
-        () => {
-
-            if (window.innerWidth > 768) {
-
-                fecharMenu();
-
-            }
-
+    // Fechar se a tela for redimensionada para desktop
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+            fecharMenuMobile();
         }
-    );
-
+    }, { passive: true });
 
     /* =====================================================
-       LINK ATIVO CONFORME A SEÇÃO
+       4. LINK ATIVO CONFORME A ROLAGEM (SCROLL SPY)
     ====================================================== */
+    const secoes = document.querySelectorAll("main section[id]");
+    const linksMenuSpy = document.querySelectorAll('.menu-principal a.menu-link[href^="#"]');
 
     function atualizarLinkAtivo() {
+        if (!secoes.length || !linksMenuSpy.length) return;
 
-        let secaoAtual = "";
-
-        const posicaoRolagem =
-            window.scrollY + 180;
-
+        const scrollPosition = window.scrollY + 140;
+        let secaoAtualId = "";
 
         secoes.forEach((secao) => {
-
-            const topo =
-                secao.offsetTop;
-
-            const altura =
-                secao.offsetHeight;
-
-
-            if (
-                posicaoRolagem >= topo &&
-                posicaoRolagem <
-                topo + altura
-            ) {
-
-                secaoAtual =
-                    secao.getAttribute("id");
-
+            const topo = secao.offsetTop;
+            const altura = secao.offsetHeight;
+            if (scrollPosition >= topo && scrollPosition < topo + altura) {
+                secaoAtualId = secao.getAttribute("id");
             }
-
         });
 
-
-        linksMenu.forEach((link) => {
-
+        linksMenuSpy.forEach((link) => {
             link.classList.remove("ativo");
-
-            const destino =
-                link.getAttribute("href");
-
-
-            if (
-                destino ===
-                `#${secaoAtual}`
-            ) {
-
+            const href = link.getAttribute("href");
+            if (href === `#${secaoAtualId}`) {
                 link.classList.add("ativo");
-
             }
-
         });
-
     }
 
-
+    window.addEventListener("scroll", atualizarLinkAtivo, { passive: true });
     atualizarLinkAtivo();
 
-    window.addEventListener(
-        "scroll",
-        atualizarLinkAtivo,
-        { passive: true }
-    );
-
-
     /* =====================================================
-       ANIMAÇÕES AO ROLAR
+       5. ANIMAÇÃO SUAVE DE ENTRADA AO ROLAR
     ====================================================== */
+    const seletoresAnimacao = [
+        ".servico-card",
+        ".diferencial-card",
+        ".sobre-imagem-wrapper",
+        ".sobre-conteudo",
+        ".contato-card",
+        ".contato-card-horario",
+        ".mapa-container",
+        ".contato-destaque",
+        ".cta-orcamento-container",
+        ".servicos-cta-box"
+    ];
 
-    const elementosAnimados =
-        document.querySelectorAll(
-            ".servico-card, " +
-            ".sobre-imagem, " +
-            ".sobre-conteudo, " +
-            ".contato-card, " +
-            ".contato-destaque, " +
-            ".cta-orcamento-texto"
-        );
+    const elementosAnimar = document.querySelectorAll(seletoresAnimacao.join(", "));
 
-
-    elementosAnimados.forEach(
-        (elemento) => {
-
-            elemento.classList.add("animar");
-
-        }
-    );
-
+    elementosAnimar.forEach((el) => {
+        el.classList.add("animar");
+    });
 
     if ("IntersectionObserver" in window) {
-
-        const observador =
-            new IntersectionObserver(
-
-                (entradas, observer) => {
-
-                    entradas.forEach(
-                        (entrada) => {
-
-                            if (
-                                entrada.isIntersecting
-                            ) {
-
-                                entrada.target
-                                    .classList
-                                    .add("visivel");
-
-                                observer.unobserve(
-                                    entrada.target
-                                );
-
-                            }
-
-                        }
-                    );
-
-                },
-
-                {
-                    threshold: 0.12
+        const observador = new IntersectionObserver((entradas, observer) => {
+            entradas.forEach((entrada) => {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add("visivel");
+                    observer.unobserve(entrada.target);
                 }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -40px 0px"
+        });
 
-            );
-
-
-        elementosAnimados.forEach(
-            (elemento) => {
-
-                observador.observe(elemento);
-
-            }
-        );
-
+        elementosAnimar.forEach((el) => observador.observe(el));
     } else {
-
-        elementosAnimados.forEach(
-            (elemento) => {
-
-                elemento.classList.add(
-                    "visivel"
-                );
-
-            }
-        );
-
+        // Fallback imediato se não suportar IntersectionObserver
+        elementosAnimar.forEach((el) => el.classList.add("visivel"));
     }
 
-
     /* =====================================================
-       FOTO DA EQUIPE - MODAL
+       6. MODAL DE FOTO AMPLIADA (LIGHTBOX)
     ====================================================== */
+    const botaoAbrirFoto = document.getElementById("abrir-foto-oficina");
+    const modalFoto = document.getElementById("foto-modal");
+    const botaoFecharFoto = document.getElementById("fechar-foto-modal");
+    const overlayModal = document.getElementById("foto-modal-overlay");
 
-    const botaoAbrirFoto =
-        document.getElementById(
-            "abrir-foto-oficina"
-        );
+    let elementoFocadoAnteriormente = null;
 
-    const modalFoto =
-        document.getElementById(
-            "foto-modal"
-        );
-
-    const botaoFecharFoto =
-        document.getElementById(
-            "fechar-foto-modal"
-        );
-
-
-    let elementoFocadoAntes =
-        null;
-
-
-    function abrirFoto() {
-
+    function abrirModalFoto() {
         if (!modalFoto) return;
-
-
-        elementoFocadoAntes =
-            document.activeElement;
-
-
-        modalFoto.classList.add(
-            "ativo"
-        );
-
-        modalFoto.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-
-        document.body.classList.add(
-            "modal-aberto"
-        );
-
+        elementoFocadoAnteriormente = document.activeElement;
+        modalFoto.classList.add("ativo");
+        modalFoto.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-aberto");
 
         if (botaoFecharFoto) {
-
             botaoFecharFoto.focus();
-
         }
-
     }
 
-
-    function fecharFoto() {
-
+    function fecharModalFoto() {
         if (!modalFoto) return;
+        modalFoto.classList.remove("ativo");
+        modalFoto.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-aberto");
 
-
-        modalFoto.classList.remove(
-            "ativo"
-        );
-
-        modalFoto.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-
-        document.body.classList.remove(
-            "modal-aberto"
-        );
-
-
-        if (elementoFocadoAntes) {
-
-            elementoFocadoAntes.focus();
-
+        if (elementoFocadoAnteriormente && typeof elementoFocadoAnteriormente.focus === "function") {
+            elementoFocadoAnteriormente.focus();
         }
-
     }
-
 
     if (botaoAbrirFoto) {
-
-        botaoAbrirFoto.addEventListener(
-            "click",
-            abrirFoto
-        );
-
+        botaoAbrirFoto.addEventListener("click", abrirModalFoto);
     }
-
 
     if (botaoFecharFoto) {
-
-        botaoFecharFoto.addEventListener(
-            "click",
-            fecharFoto
-        );
-
+        botaoFecharFoto.addEventListener("click", fecharModalFoto);
     }
 
-
-    /* =====================================================
-       FECHAR CLICANDO FORA DA FOTO
-    ====================================================== */
-
-    if (modalFoto) {
-
-        modalFoto.addEventListener(
-            "click",
-            (evento) => {
-
-                if (
-                    evento.target === modalFoto
-                ) {
-
-                    fecharFoto();
-
-                }
-
-            }
-        );
-
+    if (overlayModal) {
+        overlayModal.addEventListener("click", fecharModalFoto);
     }
 
-
     /* =====================================================
-       FECHAR COM ESC
+       7. ACESSIBILIDADE VIA TECLADO (ESC PARA FECHAR MENUS E MODAL)
     ====================================================== */
-
-    document.addEventListener(
-        "keydown",
-        (evento) => {
-
-            if (
-                evento.key === "Escape" &&
-                modalFoto &&
-                modalFoto.classList
-                    .contains("ativo")
-            ) {
-
-                fecharFoto();
-
+    document.addEventListener("keydown", (evento) => {
+        if (evento.key === "Escape") {
+            // Fechar modal de foto se aberto
+            if (modalFoto && modalFoto.classList.contains("ativo")) {
+                fecharModalFoto();
+                return;
             }
-
+            // Fechar menu mobile se aberto
+            if (botaoMenu && botaoMenu.classList.contains("aberto")) {
+                fecharMenuMobile();
+            }
         }
-    );
-
-
+    });
 });
